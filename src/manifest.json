@@ -1,21 +1,17 @@
 {
-  "name": "FreedomMarks",
-  "version": "0.1.2.1",
+  "name": "Nextcloud Bookmarks",
+  "version": "0.0.0.1",
   "description": "Browser extension for Nextcloud Bookmarks",
-  "homepage_url": "https://github.com/damko/freedommarks-browser-webextension",
+  "homepage_url": "https://github.com/saywebsolutions/nextcloud-bookmarks-browser-extension",
   "manifest_version": 2,
-
-  // https://developer.chrome.com/extensions/security
-  // https://developer.chrome.com/apps/manifest/externally_connectable
-  "content_security_policy": "default-src 'self'",
-  "externally_connectable": {},
 
   "background": {
     "scripts": ["js/background.js"]
   },
 
   "options_ui": {
-    "page": "FreedomMarks_options.html"
+    "page": "options.html",
+    "browser_style": true
   },
 
   "browser_action": {
@@ -27,8 +23,8 @@
       "48": "icons/FreedomMarks_dark_48x48.png",
       "96": "icons/FreedomMarks_dark_96x96.png"
     },
-    "default_title": "FreedomMarks",
-    "default_popup": "FreedomMarks.html",
+    "default_title": "Nextcloud Bookmarks",
+    "default_popup": "extension.html",
     "theme_icons": [{
       "light": "icons/FreedomMarks_light_32x32.png",
       "dark": "icons/FreedomMarks_dark_32x32.png",
@@ -50,7 +46,7 @@
 
   "applications": {
     "gecko": {
-      "id": "freedommarks.extension@venturin.net",
+      "id": "nextcloud-bookmarks-firefox-extension@saywebsolutions.com",
       "strict_min_version": "48.0"
     }
   },

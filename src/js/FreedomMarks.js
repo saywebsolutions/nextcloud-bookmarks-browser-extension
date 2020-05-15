@@ -6,19 +6,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     if(debug) console.log("DOM fully loaded and parsed");
 
-    var sUsrAg = navigator.userAgent;
-
-    if(typeof sUsrAg.indexOf !== 'undefined' && sUsrAg.indexOf("Chrome") > -1) {
-        browser = new ChromePromise();
-    }
-
     // retrieves settings from local storage
-    browser.storage.local.get('freedommarks_settings').then(function(result) {
+    browser.storage.local.get('nc_bookmarks_settings').then(function(result) {
 
-        var settings = result.freedommarks_settings;
-        if(debug) console.log(settings);
+        var settings = result.nc_bookmarks_settings;
 
-        if(typeof settings === 'undefined' || !settings.server_url) {
+        if(typeof settings === 'undefined' || ! settings.server_url) {
             document.getElementById('missing-options').classList.remove('hide');
             document.getElementById('content-wrapper').classList.add('hide');
             return false;
@@ -31,11 +24,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
         username = settings.username;
         password = settings.password;
 
-
         var b = document.getElementById("bookmarks_home_url");
-        b.setAttribute("href", settings.server_url + '/apps/bookmarks/');
+        b.setAttribute("href", server_url + '/apps/bookmarks/');
 
-        if(settings.bookmark_main_tab || !settings.search_main_tab) {
+        if(settings.bookmark_main_tab || ! settings.search_main_tab) {
             if(debug) console.log('bookmark tab is supposed to have focus');
             var bookmarkLabel_active_status = document.getElementById("save-bookmark-tab-label");
             bookmarkLabel_active_status.className += "active";
@@ -53,15 +45,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
             searchTab_active_status.className += "active";
         }
 
-    });
+        CurrentBrowserTab(searchForCurrentUrl);
 
-    //Checks if the URL of the current tab is already saved on the server
-    CurrentBrowserTab(fillForm);
-    // TODO this must be put on hold because Nextcloud Bookmarks did not accept to add the "search" endpoint
-    // CurrentBrowserTab(searchForCurrentUrl);
+    });
 
     // when a tab-pane gets activated ...
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
         // when necessary, it focuses the "search-tags" input box
         e.preventDefault();
 
@@ -75,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var target = $(e.target).attr("href"); // activated tab's ID
 
         if (target == '#save-bookmark-tab') {
-            if(debug) console.log('first tab has been activated');
+            if(debug) console.log(target + ' tab has been activated.');
             searchTab.className = "tab-pane";
             dailyTab.className = "tab-pane";
             CurrentBrowserTab(fillForm);
@@ -83,21 +73,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
 
         if (target == '#search-bookmarks-tab') {
-            if(debug) console.log('second tab has been activated');
+            if(debug) console.log(target + ' tab has been activated.');
             bookmarkTab.className = "tab-pane";
             dailyTab.className = "tab-pane";
             $('#search-terms').focus();
         }
 
         if (target == '#daily-bookmarks-tab') {
-            if(debug) console.log('third tab has been activated');
+            if(debug) console.log(target + ' tab has been activated.');
             bookmarkTab.className = "tab-pane";
             searchTab.className = "tab-pane";
             searchDaily();
         }
 
     });
-
 
     //when the search-bookmarks-tab input field has focus and the user hits enter it runs the search
     $('#search-tags').keypress(function (e) {
@@ -134,9 +123,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 });
 
-
-
 function testCorsEnabled(url){
+
     if(debug) console.log('function: ' + arguments.callee.name);
 
     const request = new Request(url, {
@@ -194,7 +182,6 @@ function fillForm(browserTab){
 }
 
 // This function is loaded as soon as the extension is opened
-/*
 function searchForCurrentUrl(browserTab){
 
     if(debug) {
@@ -205,7 +192,8 @@ function searchForCurrentUrl(browserTab){
     // In any case it fills in the hidden form field "bookmark-url" with tab's URL
     document.getElementById("bookmark-url").value = browserTab.url;
 
-    var endpoint = server_url + '/index.php/apps/bookmarks/public/rest/v2/search';
+    // https://nextcloud-bookmarks.readthedocs.io/en/latest/bookmark.html#query-bookmarks
+    var endpoint = server_url+'/index.php/apps/bookmarks/public/rest/v2/bookmark?url='+browserTab.url;
 
     $.ajax({
         url: endpoint,
@@ -214,10 +202,6 @@ function searchForCurrentUrl(browserTab){
         beforeSend: function (xhr) {
             xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
         },
-        data: {
-            url: browserTab.url,
-            user: username
-        },
         dataType: 'json',
     })
     .success(function(result){
@@ -225,20 +209,23 @@ function searchForCurrentUrl(browserTab){
         if(debug) {
             console.log('function: search by url .success');
             console.log(result);
+            /*
+            console.log(result.data);
+            console.log(result.data.length);
+            if(result.data && result.data.length){
+                console.log('data array not empty - matching bookmark for current URL');
+            }else{
+                console.log('data array empty - no matching bookmark for current URL');
+            } /*   */
         }
 
-        if(result.status == 'error'){
-            addNotification('Server Error',result.message);
+        if(result.status === 'error'){
+            addNotification('Server Error', result.message);
         }
 
-        if(typeof result.bookmark.id == 'undefined') {
-            // if (debug) {
-            //     console.log(browserTab);
-            //     console.log("No bookmark found with URL: " + browserTab.url);
-            // }
-            CurrentBrowserTab(fillForm);
-        } else {
-            var bookmark = result.item;
+        if((result.data && result.data.length) && typeof result.data[0].id !== 'undefined') {
+
+            var bookmark = result.data[0];
             if(debug) console.log(bookmark);
 
             $('#bookmark-additional-info').show();
@@ -257,7 +244,16 @@ function searchForCurrentUrl(browserTab){
             $('#save-bookmark-button').show();
             $('#save-bookmark-button').text("Update");
             $('#delete-bookmark-button').show();
+
+        } else {
+
+            if (debug) {
+                console.log("No bookmark found with URL: " + browserTab.url);
+            }
+
+            CurrentBrowserTab(fillForm);
         }
+
     })
     .error(function(XMLHttpRequest, status, errorThrown){
         if(debug) {
@@ -267,7 +263,6 @@ function searchForCurrentUrl(browserTab){
         }
     })
 }
-*/
 
 function saveBookmark(browserTab){
 
@@ -279,7 +274,6 @@ function saveBookmark(browserTab){
 
     //trim and replace trailing slash
     var bookmarkurl = $('#bookmark-url').val().trim().replace(/\/$/, "");
-    //var bookmarkurl = browserTab.url.trim().replace(/\/$/, "");
     if(debug) console.log('bookmarkurl: ' + bookmarkurl);
 
     const saveBtn = document.getElementById('save-bookmark-button');
@@ -294,13 +288,18 @@ function saveBookmark(browserTab){
         is_public: true
     };
 
+    if(debug) console.log('data: ' + data);
+
+    if(debug) console.log('username: ' + username);
+    if(debug) console.log('pass: ' + password);
+
     apiRequest(endpoint, 'POST', data, username, password)
         .then(result => {
             if (debug) console.log('success');
             if (debug) console.log(result);
             var bookmark = result.item;
             if(bookmark.id){
-                $('#save-bookmark-button').hide();
+//                $('#save-bookmark-button').hide();
                 $('#delete-bookmark-button').show();
                 $('#bookmark-id').val(bookmark.id);
                 addNotification('success','Saved');
@@ -417,6 +416,7 @@ function deleteBookmark(e, bookmarkId){
     }
 
 
+/*
     // TODO this doesn't work as expected on FF because it closes the extension tab
     // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/User_interface_components#Popups
     // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Anatomy_of_a_WebExtension
@@ -425,7 +425,7 @@ function deleteBookmark(e, bookmarkId){
     if (!window.confirm("Do you really want to delete this bookmark?")) {
         e.preventDefault();
         return false;
-    }
+    } /*   */
 
     const deleteBtn = document.getElementById('delete-bookmark-button');
     deleteBtn.disabled = true;
@@ -477,4 +477,12 @@ function addNotification(type,message){
     div.appendChild(d).appendChild(span);
 
     $('#notification-area').show(0).delay(2500).hide(0);
+}
+
+function onGot(item) {
+  console.log(item);
+}
+
+function onError(error) {
+  console.log(`Error: ${error}`);
 }

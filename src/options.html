@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+
+    <style type="text/css" media="screen">
+
+      fieldset > legend {
+        font-weight: bold;
+      }
+
+      fieldset > input[type=text],
+      fieldset > input[type=password]
+      {
+        width: 100%;
+      }
+
+    </style>
+
+  </head>
+
+  <body class="settings" style="margin: 20px auto; width: 95%;">
+
+    <form id="freedommarks_settings_form">
+
+      <fieldset class="browser-style" id="label_server_url">
+        <legend>Server URL:</legend>
+        <input type="text" id="server_url" aria-describedby="label_server_url">
+      </fieldset>
+
+      <fieldset class="browser-style" id="label_username" class="">
+        <legend>Username:</legend>
+        <input type="text" id="username" aria-describedby="label_username">
+      </fieldset>
+
+      <fieldset class="browser-style" id="label_password">
+        <legend>Password:</legend>
+        <input type="password" class="form-control" id="password" aria-describedby="label_password">
+      </fieldset>
+
+      <fieldset class="browser-style" id="label_main_tab">
+        <legend>Main Tab:</legend>
+        <input type="radio" name="main_tab" id="bookmark_main_tab" value="bookmark" checked="true">&nbsp;Bookmark&nbsp;&nbsp;
+        <input type="radio" name="main_tab" id="search_main_tab" value="search">&nbsp;Search
+      </fieldset>
+
+      <br>
+
+      <button type="button" class="browser-style" id="saveOptions">Save</button>
+
+      <br>
+      
+    </form>
+    
+    <div class="boxed" id="settings_notification_area"></div>
+
+    <script src="js/options.js"></script>
+    
+  </body>
+</html>
