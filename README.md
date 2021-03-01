@@ -37,6 +37,14 @@ Install extension from Mozilla Extensions page, or load as a temporary add-on
 * Nextcloud username
 * Nextcloud password
 
+## Development
+
+### Resources
+
+* [https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions)
+
+
+
 # Privacy Policy
 
 This extension communicates ONLY with your Nextcloud server; there is no tracking of any kind, and no third parties involved.
