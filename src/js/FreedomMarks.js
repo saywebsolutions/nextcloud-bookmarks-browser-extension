@@ -209,7 +209,6 @@ function searchForCurrentUrl(browserTab){
         if(debug) {
             console.log('function: search by url .success');
             console.log(result);
-            /*
             console.log(result.data);
             console.log(result.data.length);
             if(result.data && result.data.length){
@@ -284,14 +283,17 @@ function saveBookmark(browserTab){
         url: bookmarkurl,
         title: $('#bookmark-title').val(),
         description: $('#bookmark-description').val(),
-        item: {tags: getTagsArrayFromElement('bookmark-tags')},
+        //tags used to be sent in a property called 'items' which is now deprecated
+        //https://nextcloud-bookmarks.readthedocs.io/en/latest/bookmark.html#create-a-bookmark
+        tags: getTagsArrayFromElement('bookmark-tags'),
         is_public: true
     };
 
-    if(debug) console.log('data: ' + data);
+    if(debug) console.log('saveBookmark data:');
+    if(debug) console.dir(data);
 
     if(debug) console.log('username: ' + username);
-    if(debug) console.log('pass: ' + password);
+//    if(debug) console.log('pass: ' + password);
 
     apiRequest(endpoint, 'POST', data, username, password)
         .then(result => {

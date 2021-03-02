@@ -19,6 +19,9 @@ function apiRequest(endpoint, method, data, username, password) {
         opts.body = JSON.stringify(data);
     }
 
+    if(debug) console.log('apiRequest - endpoint: :'+endpoint);
+    if(debug) console.dir(data);
+
     const request = new Request(endpoint, opts);
 
     return new Promise((resolve, reject) => {
