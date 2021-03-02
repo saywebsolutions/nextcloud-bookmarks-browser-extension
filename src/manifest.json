@@ -17,31 +17,31 @@
   "browser_action": {
     "browser_style": true,
     "default_icon": {
-      "16": "icons/FreedomMarks_dark_16x16.png",
-      "24": "icons/FreedomMarks_dark_24x24.png",
-      "32": "icons/FreedomMarks_dark_32x32.png",
-      "48": "icons/FreedomMarks_dark_48x48.png",
-      "96": "icons/FreedomMarks_dark_96x96.png"
+      "16": "icons/bookmarks-icon.png",
+      "24": "icons/bookmarks-icon.png",
+      "32": "icons/bookmarks-icon.png",
+      "48": "icons/bookmarks-icon.png",
+      "96": "icons/bookmarks-icon.png"
     },
     "default_title": "Nextcloud Bookmarks",
     "default_popup": "extension.html",
     "theme_icons": [{
-      "light": "icons/FreedomMarks_light_32x32.png",
-      "dark": "icons/FreedomMarks_dark_32x32.png",
+      "light": "icons/bookmarks-icon.png",
+      "dark": "icons/bookmarks-icon.png",
       "size": 32
     }, {
-      "light": "icons/FreedomMarks_light_48x48.png",
-      "dark": "icons/FreedomMarks_dark_48x48.png",
+      "light": "icons/bookmarks-icon.png",
+      "dark": "icons/bookmarks-icon.png",
       "size": 48
     }]
   },
 
   "icons": {
-    "16": "icons/FreedomMarks_dark_16x16.png",     
-    "24": "icons/FreedomMarks_dark_24x24.png",        
-    "32": "icons/FreedomMarks_dark_32x32.png",      
-    "48": "icons/FreedomMarks_dark_48x48.png",
-    "96": "icons/FreedomMarks_dark_96x96.png" 
+    "16": "icons/bookmarks-icon.png",     
+    "24": "icons/bookmarks-icon.png",        
+    "32": "icons/bookmarks-icon.png",      
+    "48": "icons/bookmarks-icon.png",
+    "96": "icons/bookmarks-icon.png" 
   },
 
   "applications": {
@@ -55,5 +55,14 @@
     "activeTab",
     "storage",
     "https://*/*"
-  ]
+  ],
+
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+B"
+      }
+    }
+  }
+  
 }

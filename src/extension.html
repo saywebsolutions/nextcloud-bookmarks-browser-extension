@@ -10,7 +10,6 @@
         <link href="css/third-party/bootstrap.min.css" rel="stylesheet">
         <link href="css/third-party/jquery-ui.min.css" rel="stylesheet">
         <link href="css/extension.css" rel="stylesheet">
-        <link href="css/bookmarks-html-list.css" rel="stylesheet">
     </head>
 
     <body>
@@ -20,6 +19,7 @@
         </div>
 
         <div id="content-wrapper">
+
             <!-- Tab labels -->
             <ul id="extension-tabs" class="nav nav-tabs" role="tablist">
 
@@ -40,51 +40,63 @@
             <!-- Tab panes -->
             <div class="tab-content">
 
-
                 <!-- Bookmark Tab content -->
                 <div class="tab-pane" id="save-bookmark-tab" role="tabpanel">
+
                     <form id="save-bookmark-form">
+
                         <input type="hidden" class="form-control" id="bookmark-id">
                         <input type="hidden" class="form-control" id="bookmark-url">
-                        <div class="input-group">
+
+                        <div class="input-group input-group-lg">
                             <span class="input-group-addon" id="basic-addon1">Title:</span>
                             <input type="text" class="form-control" id="bookmark-title" aria-describedby="basic-addon1">
                         </div>
-                        <div class="input-group">
+
+                        <div class="input-group input-group-lg">
                             <span class="input-group-addon" id="basic-addon3">Tags:</span>
                             <input type="text" class="form-control" id="bookmark-tags" aria-describedby="basic-addon3">
                         </div>
-                        <div class="input-group">
+
+                        <div class="input-group input-group-lg">
                             <span class="input-group-addon" id="basic-addon2">Note:</span>
                             <textarea type="text" class="form-control" id="bookmark-description" aria-describedby="basic-addon2"></textarea>
                         </div>
 
-                        <ul id="bookmark-additional-info" class="bookmark-additional-info">
-                            <li>Created: <span id="bookmark-created_at"></span></li>
-                            <li>Updated: <span id="bookmark-updated_at"></span></li>
-                        </ul>
+                        <br style="clear:both;">
 
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary" id="save-bookmark-button">Save</button>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="bookmark-additional-info">
+                                    Created: <span id="bookmark-created_at"></span>
+                                    <br style="clear:both;">
+                                    <br style="clear:both;">
+                                </div>
+                                <button type="button" class="btn btn-block btn-primary" id="save-bookmark-button">Save</button>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="bookmark-additional-info">
+                                    Updated: <span id="bookmark-updated_at"></span>
+                                    <br style="clear:both;">
+                                    <br style="clear:both;">
+                                </div>
+                                <button type="button" class="btn btn-block btn-danger" id="delete-bookmark-button">Delete</button>
+                            </div>
                         </div>
-                        <div class="btn-group" style="float: right;">
-                            <button type="button" class="btn btn-danger" id="delete-bookmark-button">Delete</button>
-                        </div>
-                        <div style="clear: both;"></div>
+
                     </form>
                 </div>
-
 
                 <!-- Search Tab content -->
                 <div class="tab-pane" id="search-bookmarks-tab" role="tabpanel">
                     <form id="search-bookmarks-form">
                         <!-- terms -->
-                        <div class="input-group">
+                        <div class="input-group input-group-lg">
                             <span class="input-group-addon" id="terms-addon">Terms:</span>
                             <input type="text" class="form-control" id="search-terms" aria-describedby="terms-addon" placeholder="term1,term2, ..." autofocus>
                         </div>
                         <!-- tags -->
-                        <div class="input-group">
+                        <div class="input-group input-group-lg">
                             <span class="input-group-addon" id="tags-addon">Tags:&nbsp;</span>
                             <input type="text" class="form-control" id="search-tags" aria-describedby="tags-addon" placeholder="tag1,tag2, ..." autofocus>
                             <span class="input-group-addon">
@@ -95,7 +107,7 @@
                             </span>
                         </div>
                         <!-- disable paging -->
-                        <div class="input-group">
+                        <div class="input-group input-group-lg">
                             <span class="input-group-addon" id="tags-addon">Disable paging:</span>
                             <span class="form-control">
                                 <input type="checkbox" name="disable_paging" value="disable_paging" />
@@ -114,19 +126,26 @@
                 </div>
             </div>
 
-            <div id="bottom-line">
-                <div class="column">
-                    <a class="bottom-link" id="bookmarks_home_url">My bookmarks</a>
-                </div>
-                <div id="notification-area" class="column">
-                </div>
-                <div class="column">
-                    <div class="right">
-                        <a class="bottom-link" href="https://github.com/damko/freedommarks-browser-webextension" target="_blank">
-                    FreedomMarks</a>
-                    </div>
-                </div>
+            <div class="row">
+                <div class="col-xs-12" id="notification-area"></div>
             </div>
+
+            <div class="row" id="footer">
+
+                <div class="col-xs-12">
+                    <hr>
+                </div>
+
+                <div class="col-xs-6">
+                    <a class="bottom-link" id="bookmarks_home_url">Nextcloud Instance</a>
+                </div>
+
+                <div class="col-xs-6 text-right">
+                    <a class="bottom-link" href="https://github.com/saywebsolutions/nextcloud-bookmarks-browser-extension" target="_blank">Github</a>
+                </div>
+
+            </div>
+
         </div>
     </body>
 

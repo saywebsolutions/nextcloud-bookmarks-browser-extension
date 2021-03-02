@@ -227,7 +227,7 @@ function searchForCurrentUrl(browserTab){
             var bookmark = result.data[0];
             if(debug) console.log(bookmark);
 
-            $('#bookmark-additional-info').show();
+            $('.bookmark-additional-info').show();
             $('#bookmark-id').val(bookmark.id);
             $('#bookmark-title').val(bookmark.title);
             $('#bookmark-tags').val(bookmark.tags);
@@ -331,12 +331,17 @@ function searchByTermsOrTags(){
 
     var terms = getTagsArrayFromElement('search-terms');
     var tags = getTagsArrayFromElement('search-tags');
-    var conjunction = $("input[name='conjunction']:checked"). val();
-    var page = 0;
-    if($("input[name='disable_paging']:checked"). val()) {
 
+    console.log(tags);
+    //TODO - find out why nextcloud returns results that don't match requested tag(s)
+
+    var conjunction = $("input[name='conjunction']:checked").val();
+    var page = 0;
+
+    if($("input[name='disable_paging']:checked"). val()) {
         var page = -1;
     }
+
     searchBookmarks(endpoint, terms, tags, conjunction, page, 'bookmarks-list');
 }
 

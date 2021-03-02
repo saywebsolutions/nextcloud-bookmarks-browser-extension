@@ -13,9 +13,6 @@ This is a Firefox extension for [Nextcloud Bookmarks](https://github.com/nextclo
 
 ## Missing features
 
-* Cannot search for a bookmark starting from a URL (API lacks the method)
-* Cannot retrieve the list of already set tags (API lacks the method)
-* Cannot edit bookmarks
 * No translations / localization
 
 # Help needed
@@ -36,6 +33,10 @@ Install extension from Mozilla Extensions page, or load as a temporary add-on
 * URL of your Nextcloud server
 * Nextcloud username
 * Nextcloud password
+
+## Keyboard Shortcuts
+
+<kbd>Ctrl+Alt+B</kbd> toggles the extension popup.
 
 ## Development
 
