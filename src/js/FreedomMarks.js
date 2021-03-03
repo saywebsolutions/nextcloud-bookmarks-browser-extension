@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         e.preventDefault();
 
         // closes the notification area
-        $('#notification-area').hide();
+        $('#notification-wrapper').hide();
 
         var bookmarkTab = document.getElementById("save-bookmark-tab");
         var searchTab = document.getElementById("search-bookmarks-tab");
@@ -65,11 +65,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var target = $(e.target).attr("href"); // activated tab's ID
 
         if (target == '#save-bookmark-tab') {
+
             if(debug) console.log(target + ' tab has been activated.');
             searchTab.className = "tab-pane";
             dailyTab.className = "tab-pane";
+
             CurrentBrowserTab(fillForm);
-            $('#bookmark-title').focus();
         }
 
         if (target == '#search-bookmarks-tab') {
@@ -179,6 +180,7 @@ function fillForm(browserTab){
     if(debug) console.log("url: " + browserTab.url);
     document.getElementById("bookmark-url").value = browserTab.url;
     document.getElementById("bookmark-title").value = browserTab.title;
+    document.getElementById("bookmark-tags").focus();
 }
 
 // This function is loaded as soon as the extension is opened
@@ -464,16 +466,20 @@ function deleteBookmark(e, bookmarkId){
 
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/notifications
 // This could become a browser notification
-function addNotification(type,message){
+function addNotification(type, message){
+
     if(debug) console.log('function: ' + arguments.callee.name);
 
-    var div = document.getElementById('notification-area');
+    var div = document.getElementById('notification');
+
     div.innerHTML = "";
 
     var d = document.createElement("div");
+
     if(type == "success"){
         d.className = "notify";
     }
+
     if(type == "error") {
         d.className = "alarm";
     }
@@ -483,7 +489,7 @@ function addNotification(type,message){
 
     div.appendChild(d).appendChild(span);
 
-    $('#notification-area').show(0).delay(2500).hide(0);
+    $('#notification-wrapper').show(0).delay(1800).hide(0);
 }
 
 function onGot(item) {
